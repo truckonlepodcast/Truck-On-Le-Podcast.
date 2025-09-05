@@ -7,128 +7,271 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
+  Platform,
 } from "react-native";
 import { Audio } from "expo-av";
 
-// Logo hébergé
+// === CONFIG ===
 const LOGO_URL = "https://i.ibb.co/1RHgdnY/truckon-logo.jpg";
-// Flux RSS
 const RSS_URL = "https://anchor.fm/s/ac4f88bc/podcast/rss";
+const PROXY_PREFIX = "https://api.allorigins.win/raw?url=";
+// =================
 
 export default function App() {
   const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const soundRef = useRef(null);
-  const [currentEpisode, setCurrentEpisode] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [fetchError, setFetchError] = useState(null);
 
-  // Parse RSS avec regex (pas besoin de DOMParser)
+  const soundRef = useRef(null);
+  const [current, setCurrent] = useState(null); // { title, url }
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [positionMillis, setPositionMillis] = useState(0);
+  const [durationMillis, setDurationMillis] = useState(0);
+
   const parseRSS = (xmlText) => {
     const items = [];
-    const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+    const itemRegex = /<item[\s\S]*?<\/item>/gi;
     let match;
     while ((match = itemRegex.exec(xmlText)) !== null) {
-      const itemBlock = match[1];
-      const title = (itemBlock.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) ||
-        itemBlock.match(/<title>(.*?)<\/title>/))?.[1] || "Épisode";
-      const description =
-        (itemBlock.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/) ||
-          itemBlock.match(/<description>(.*?)<\/description>/))?.[1] || "";
-      const audio =
-        (itemBlock.match(/<enclosure[^>]*url="(.*?)"/) || [])[1] || "";
+      const block = match[0];
 
+      const titleMatch = block.match(/<title>(?:<!\[CDATA\[(.*?)\]\]>|(.*?))<\/title>/i);
+      const title = titleMatch ? (titleMatch[1] || titleMatch[2] || "Épisode") : "Épisode";
+
+      const descMatch = block.match(/<description>(?:<!\[CDATA\[(.*?)\]\]>|(.*?))<\/description>/i);
+      const rawDesc = descMatch ? (descMatch[1] || descMatch[2] || "") : "";
+
+      const enclosureMatch = block.match(/<enclosure[^>]*url=["']([^"']+)["']/i);
+      const mediaMatch = block.match(/<media:content[^>]*url=["']([^"']+)["']/i);
+      const guidMatch = block.match(/<guid[^>]*>(.*?)<\/guid>/i);
+      const mp3InText = block.match(/https?:\/\/[^'"\s<>]+\.mp3\b/i);
+      const linkMatch = block.match(/<link>(.*?)<\/link>/i);
+
+      let audio =
+        (enclosureMatch && enclosureMatch[1]) ||
+        (mediaMatch && mediaMatch[1]) ||
+        (mp3InText && mp3InText[0]) ||
+        (linkMatch && linkMatch[1] && linkMatch[1].includes(".mp3") ? linkMatch[1] : "") ||
+        "";
+
+      if (!audio && guidMatch && guidMatch[1] && guidMatch[1].includes(".mp3")) {
+        audio = guidMatch[1];
+      }
+
+      const unescape = (s) => (s || "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
       items.push({
-        title,
-        description,
-        audio,
+        title: unescape(title).trim(),
+        description: unescape(rawDesc).trim(),
+        url: audio.trim(),
       });
     }
     return items;
   };
 
+  const tryFetchRss = async (useProxy = false) => {
+    const url = useProxy ? PROXY_PREFIX + encodeURIComponent(RSS_URL) : RSS_URL;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const text = await res.text();
+    return parseRSS(text);
+  };
+
   useEffect(() => {
+    let mounted = true;
     (async () => {
+      setLoading(true);
+      setFetchError(null);
       try {
-        const response = await fetch(RSS_URL);
-        const text = await response.text();
-        const parsed = parseRSS(text);
-        setEpisodes(parsed);
-      } catch (e) {
-        console.error("Erreur RSS:", e);
-      } finally {
-        setLoading(false);
+        try {
+          await Audio.setAudioModeAsync({
+            allowsRecordingIOS: false,
+            staysActiveInBackground: false,
+            interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+            playsInSilentModeIOS: true,
+          });
+        } catch (e) {
+          console.warn("Audio.setAudioModeAsync:", e);
+        }
+
+        try {
+          const direct = await tryFetchRss(false);
+          if (mounted) {
+            setEpisodes(direct.filter((it) => it.title));
+            setLoading(false);
+            return;
+          }
+        } catch (eDirect) {
+          console.warn("Fetch direct failed:", eDirect?.message || eDirect);
+          try {
+            const proxied = await tryFetchRss(true);
+            if (mounted) {
+              setEpisodes(proxied.filter((it) => it.title));
+              setLoading(false);
+              return;
+            }
+          } catch (eProxy) {
+            console.error("Fetch proxy failed:", eProxy?.message || eProxy);
+            if (mounted) {
+              setFetchError(String(eProxy?.message || eProxy));
+              setLoading(false);
+              return;
+            }
+          }
+        }
+      } catch (finalErr) {
+        console.error("Erreur fetch finale:", finalErr);
+        if (mounted) {
+          setFetchError(String(finalErr));
+          setLoading(false);
+        }
       }
     })();
 
     return () => {
-      if (soundRef.current) {
-        soundRef.current.unloadAsync();
-        soundRef.current = null;
-      }
+      mounted = false;
     };
   }, []);
 
-  const playEpisode = async (episode) => {
+  useEffect(() => {
+    return () => {
+      (async () => {
+        if (soundRef.current) {
+          try {
+            await soundRef.current.unloadAsync();
+          } catch (e) {}
+          soundRef.current = null;
+        }
+      })();
+    };
+  }, []);
+
+  const playEpisode = async (ep) => {
+    if (!ep || !ep.url) {
+      setFetchError("Aucun lien audio trouvé pour cet épisode.");
+      return;
+    }
+    setFetchError(null);
     try {
       if (soundRef.current) {
-        await soundRef.current.stopAsync();
-        await soundRef.current.unloadAsync();
+        try {
+          await soundRef.current.stopAsync();
+          await soundRef.current.unloadAsync();
+        } catch (e) {}
+        soundRef.current = null;
       }
+
       const { sound } = await Audio.Sound.createAsync(
-        { uri: episode.audio },
-        { shouldPlay: true }
+        { uri: ep.url },
+        { shouldPlay: true, progressUpdateIntervalMillis: 500 },
+        (status) => {
+          if (!status) return;
+          setPositionMillis(status.positionMillis ?? 0);
+          setDurationMillis(status.durationMillis ?? 0);
+          setIsPlaying(!!status.isPlaying);
+          if (status.didJustFinish) setIsPlaying(false);
+        }
       );
+
       soundRef.current = sound;
-      setCurrentEpisode(episode.title);
+      setCurrent({ title: ep.title, url: ep.url });
       setIsPlaying(true);
     } catch (err) {
       console.error("Erreur lecture:", err);
+      setFetchError("Erreur lecture: " + (err?.message || err));
     }
   };
 
   const pauseResume = async () => {
     if (!soundRef.current) return;
-    const status = await soundRef.current.getStatusAsync();
-    if (status.isPlaying) {
-      await soundRef.current.pauseAsync();
-      setIsPlaying(false);
-    } else {
-      await soundRef.current.playAsync();
-      setIsPlaying(true);
+    try {
+      const status = await soundRef.current.getStatusAsync();
+      if (status.isPlaying) {
+        await soundRef.current.pauseAsync();
+      } else {
+        await soundRef.current.playAsync();
+      }
+    } catch (e) {
+      console.error(e);
+      setFetchError("Erreur contrôle lecture: " + (e?.message || e));
     }
   };
 
   const stop = async () => {
     if (!soundRef.current) return;
-    await soundRef.current.stopAsync();
-    await soundRef.current.unloadAsync();
+    try {
+      await soundRef.current.stopAsync();
+      await soundRef.current.unloadAsync();
+    } catch (e) {
+      console.warn(e);
+    }
     soundRef.current = null;
-    setCurrentEpisode(null);
+    setCurrent(null);
     setIsPlaying(false);
+    setPositionMillis(0);
+    setDurationMillis(0);
+  };
+
+  const formatTime = (ms) => {
+    if (!ms || ms <= 0) return "0:00";
+    const s = Math.floor(ms / 1000);
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${m}:${sec < 10 ? "0" : ""}${sec}`;
   };
 
   if (loading) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="red" />
-        <Text style={styles.loadingText}>Chargement...</Text>
+        <Text style={styles.loadingText}>Chargement du podcast...</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      {/* En-tête */}
       <View style={styles.header}>
-        <Image source={{ uri: LOGO_URL }} style={styles.logo} />
+        <Image source={{ uri: LOGO_URL }} style={styles.logo} resizeMode="contain" />
         <Text style={styles.title}>🚛 Truck On Le Podcast</Text>
       </View>
 
-      {/* Lecteur */}
-      {currentEpisode && (
+      {fetchError ? (
+        <View style={styles.errorBox}>
+          <Text style={styles.errorTitle}>Erreur</Text>
+          <Text style={styles.errorText}>{String(fetchError)}</Text>
+          <Text style={styles.hint}>
+            Si tu es en mode "web" (aperçu navigateur), la lecture audio peut être bloquée — ouvre l'app
+            Expo Go sur ton téléphone pour tester.
+          </Text>
+        </View>
+      ) : null}
+
+      {current ? (
         <View style={styles.player}>
           <Text style={styles.playerLabel}>▶️ En lecture :</Text>
-          <Text style={styles.playerTitle}>{currentEpisode}</Text>
+          <Text style={styles.playerTitle} numberOfLines={1}>
+            {current.title}
+          </Text>
+
+          <View style={{ marginTop: 8 }}>
+            <View style={styles.progressBarBg}>
+              <View
+                style={[
+                  styles.progressBarFill,
+                  {
+                    width:
+                      durationMillis > 0
+                        ? `${Math.min(100, (positionMillis / durationMillis) * 100)}%`
+                        : "0%",
+                  },
+                ]}
+              />
+            </View>
+            <Text style={styles.timeText}>
+              {formatTime(positionMillis)} / {formatTime(durationMillis)}
+            </Text>
+          </View>
+
           <View style={styles.controls}>
             <TouchableOpacity onPress={pauseResume} style={styles.controlButton}>
               <Text style={styles.controlText}>{isPlaying ? "⏸ Pause" : "▶️ Lecture"}</Text>
@@ -138,50 +281,93 @@ export default function App() {
             </TouchableOpacity>
           </View>
         </View>
-      )}
+      ) : null}
 
-      {/* Liste des épisodes */}
       <FlatList
         data={episodes}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => playEpisode(item)}
-            style={styles.episodeCard}
-          >
-            <Text style={styles.episodeTitle}>{item.title}</Text>
-            <Text style={styles.episodeDesc} numberOfLines={2}>
-              {item.description.replace(/<[^>]*>?/gm, "")}
-            </Text>
-          </TouchableOpacity>
-        )}
+        keyExtractor={(_, i) => i.toString()}
+        renderItem={({ item }) => {
+          const disabled = !item.url;
+          return (
+            <TouchableOpacity
+              onPress={() => !disabled && playEpisode(item)}
+              style={[styles.episodeCard, disabled && { opacity: 0.5 }]}
+            >
+              <Text style={styles.episodeTitle}>{item.title}</Text>
+              <Text style={styles.episodeDesc} numberOfLines={2}>
+                {item.description.replace(/<[^>]*>?/gm, "")}
+              </Text>
+              {disabled ? <Text style={styles.noAudio}>Aucun fichier audio détecté</Text> : null}
+            </TouchableOpacity>
+          );
+        }}
+        contentContainerStyle={{ paddingBottom: 80 }}
       />
+
+      {Platform.OS === "web" ? (
+        <View style={styles.webNote}>
+          <Text style={{ color: "white" }}>
+            Note : en mode web la lecture peut être limitée. Teste dans Expo Go (iOS/Android).
+          </Text>
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "black", paddingTop: 40 },
+  container: { flex: 1, backgroundColor: "black", paddingTop: 36 },
   center: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "black" },
-  loadingText: { color: "white", marginTop: 10 },
-  header: { alignItems: "center", marginBottom: 16 },
-  logo: { width: 160, height: 160, borderRadius: 12 },
-  title: { color: "white", fontSize: 22, fontWeight: "700", marginTop: 10 },
+  loadingText: { color: "white", marginTop: 12 },
+  header: { alignItems: "center", marginBottom: 12 },
+  logo: {
+    width: 180,
+    height: 180,
+    borderRadius: 20,
+    backgroundColor: "white",
+    marginBottom: 10,
+  },
+  title: { color: "white", fontSize: 20, fontWeight: "700", marginTop: 10 },
   player: { padding: 12, backgroundColor: "#222", margin: 12, borderRadius: 10 },
   playerLabel: { color: "red", fontWeight: "700" },
   playerTitle: { color: "white", marginTop: 4, fontWeight: "600" },
-  controls: { flexDirection: "row", marginTop: 8 },
+  controls: { flexDirection: "row", marginTop: 10 },
   controlButton: { marginRight: 12, padding: 8, backgroundColor: "#444", borderRadius: 6 },
   controlText: { color: "white", fontSize: 16 },
+  progressBarBg: {
+    height: 6,
+    backgroundColor: "#333",
+    borderRadius: 4,
+    overflow: "hidden",
+    marginTop: 6,
+  },
+  progressBarFill: {
+    height: 6,
+    backgroundColor: "red",
+  },
+  timeText: { color: "gray", marginTop: 6, fontSize: 12 },
   episodeCard: {
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#111",
     padding: 14,
     marginVertical: 6,
-    marginHorizontal: 14,
+    marginHorizontal: 12,
     borderRadius: 10,
-    borderLeftWidth: 5,
+    borderLeftWidth: 6,
     borderLeftColor: "red",
   },
   episodeTitle: { color: "white", fontSize: 16, fontWeight: "700" },
   episodeDesc: { color: "gray", marginTop: 6 },
+  noAudio: { color: "orange", marginTop: 8, fontWeight: "600" },
+  errorBox: {
+    backgroundColor: "#3a1a1a",
+    borderColor: "red",
+    borderWidth: 1,
+    margin: 12,
+    padding: 10,
+    borderRadius: 8,
+  },
+  errorTitle: { color: "red", fontWeight: "700", marginBottom: 6 },
+  errorText: { color: "white" },
+  hint: { color: "gray", marginTop: 6, fontSize: 12 },
+  webNote: { padding: 8, alignItems: "center" },
 });
