@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Truck On Le Podcast</title>
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVHJ1Y2sgT24gTGUgUG9kY2FzdCIsInNob3J0X25hbWUiOiJUcnVjayBPbiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWYyOTM3IiwidGhlbWVfY29sb3IiOiIjMWYyOTM3IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjNhV1IwYUQwaU1qRXlJaUJvWldsbmFIUTlJakV5TWlJZ2RtbGxkMEp2ZUQwaU1DQXdJREV5TWlBMU1qSWlJSGh0Ykc1elBTSm9kSFJ3T2k4dmQzZDNMbmN6TG05eVp5OHlNREF3TDNOMlp5STZQQ0psYkdsd2MyVWdjSGc5SWpZeElpQndlVDBpTVRjMElpQjNhV1IwYUQwaU1UWXdJaUJvWldsbmFIUTlJalEwSWlCbWFXeHNQU0lqTkRrME5qWTNJaUJmUGpWY2JtUmxabUVnYVdROUlsUWlJRjluUG1wY2JpQWdQSEJoZEdnZ1pEMGlUVEkzSURNNWFFTXhOMEF4TkRBeE9TNHdNVUU0TGpCQk9EQXdOakE1TlNBdE1TNDNOQzQzTURNeVFUTXpMall4UXpNekxqWXhJREV6T1M0eU55QTNOREl4TVRRNklETTRMakUwSURNeU5DODJOM2d0TmpKY2JrWmpiRzl6WldacGRHd3ZQZ289IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJzaXplcyI6IjE5MngxOTIifV19">
-    <meta name="theme-color" content="#1f2937">
+    <title>Truck On Le Podcast - Pro Diesel Bellechasse</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVHJ1Y2sgT24gTGUgUG9kY2FzdCIsInNob3J0X25hbWUiOiJUcnVjayBPbiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZGMyNjI2IiwidGhlbWVfY29sb3IiOiIjZGMyNjI2IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjNhV1IwYUQwaU1qRXlJaUJvWldsbmFIUTlJakV5TWlJZ2RtbGxkMEp2ZUQwaU1DQXdJREV5TWlBMU1qSWlJSGh0Ykc1elBTSm9kSFJ3T2k4dmQzZDNMbmN6TG05eVp5OHlNREF3TDNOMlp5STZQQ0psYkdsd2MyVWdjSGc5SWpZeElpQndlVDBpTVRjMElpQjNhV1IwYUQwaU1UWXdJaUJvWldsbmFIUTlJalEwSWlCbWFXeHNQU0lqTkRrME5qWTNJaUJmUGpWY2JtUmxabUZnYVdROUlsUWlJRjluUG1wY2JpQWdQSEJoZEdnZ1pEMGlUVEkzSURNNWFFTXhOMEF4TkRBeE9TNHdNVUU0TGpCQk9EQXdOakE1TlNBdE1TNDNOQzQzTURNeVFUTXpMall4UXpNekxqWXhJREV6T1M0eU55QTNOREl4TVRRNklETTRMakUwSURNeU5DODJOM2d0TmpKY2JrWmpiRzl6WldacGRHd3ZQZ289IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJzaXplcyI6IjE5MngxOTIifV19">
+    <meta name="theme-color" content="#dc2626">
     <style>
         * {
             margin: 0;
@@ -15,7 +15,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2a2a2a 100%);
             color: white;
             min-height: 100vh;
         }
@@ -34,21 +34,29 @@
         .logo {
             width: 120px;
             height: 120px;
-            background: linear-gradient(45deg, #4f46e5, #06b6d4);
+            background: white;
             border-radius: 20px;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.5);
+            overflow: hidden;
+            border: 2px solid #dc2626;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
         }
 
         .title {
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #4f46e5, #06b6d4);
+            background: linear-gradient(45deg, #dc2626, #ffffff);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -57,10 +65,12 @@
         .subtitle {
             opacity: 0.8;
             font-size: 16px;
+            color: #fca5a5;
         }
 
         .player-section {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(220, 38, 38, 0.4);
             border-radius: 16px;
             padding: 20px;
             margin: 30px 0;
@@ -76,6 +86,7 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 10px;
+            color: #fca5a5;
         }
 
         .episode-description {
@@ -93,8 +104,8 @@
         }
 
         .control-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
+            background: rgba(220, 38, 38, 0.3);
+            border: 2px solid rgba(220, 38, 38, 0.6);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -108,15 +119,22 @@
         }
 
         .control-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(220, 38, 38, 0.5);
+            border-color: rgba(220, 38, 38, 0.8);
             transform: scale(1.1);
         }
 
         .play-btn {
             width: 70px;
             height: 70px;
-            background: linear-gradient(45deg, #4f46e5, #06b6d4);
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
             font-size: 30px;
+            border: 3px solid rgba(220, 38, 38, 0.8);
+        }
+
+        .play-btn:hover {
+            background: linear-gradient(45deg, #b91c1c, #dc2626);
+            border-color: #dc2626;
         }
 
         .progress-container {
@@ -125,16 +143,17 @@
 
         .progress-bar {
             width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
             cursor: pointer;
+            border: 1px solid rgba(220, 38, 38, 0.3);
         }
 
         .progress {
             height: 100%;
-            background: linear-gradient(45deg, #4f46e5, #06b6d4);
-            border-radius: 3px;
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
+            border-radius: 4px;
             width: 0%;
             transition: width 0.1s ease;
         }
@@ -145,10 +164,12 @@
             margin-top: 10px;
             font-size: 12px;
             opacity: 0.7;
+            color: #fca5a5;
         }
 
         .episodes-section {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(220, 38, 38, 0.3);
             border-radius: 16px;
             padding: 20px;
             backdrop-filter: blur(10px);
@@ -158,32 +179,36 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 20px;
+            color: #fca5a5;
         }
 
         .episode-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 12px;
             padding: 15px;
             margin-bottom: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
         }
 
         .episode-item:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(220, 38, 38, 0.15);
+            border-color: rgba(220, 38, 38, 0.6);
             transform: translateY(-2px);
         }
 
         .episode-item h3 {
             font-size: 16px;
             margin-bottom: 5px;
+            color: #fca5a5;
         }
 
         .episode-meta {
             font-size: 12px;
             opacity: 0.7;
             margin-bottom: 8px;
+            color: #dc2626;
         }
 
         .episode-desc {
@@ -196,11 +221,12 @@
             text-align: center;
             padding: 40px;
             opacity: 0.7;
+            color: #fca5a5;
         }
 
         .error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid rgba(220, 38, 38, 0.4);
             border-radius: 12px;
             padding: 20px;
             text-align: center;
@@ -213,7 +239,7 @@
         }
 
         .install-banner {
-            background: linear-gradient(45deg, #4f46e5, #06b6d4);
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
             border-radius: 12px;
             padding: 15px;
             margin-bottom: 20px;
@@ -223,13 +249,54 @@
 
         .install-btn {
             background: white;
-            color: #1f2937;
+            color: #dc2626;
             border: none;
             border-radius: 8px;
             padding: 10px 20px;
             font-weight: 600;
             cursor: pointer;
             margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .install-btn:hover {
+            background: #f3f4f6;
+            color: #b91c1c;
+        }
+
+        .refresh-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .refresh-btn {
+            background: rgba(220, 38, 38, 0.3);
+            border: 1px solid rgba(220, 38, 38, 0.6);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(220, 38, 38, 0.5);
+            border-color: rgba(220, 38, 38, 0.8);
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #fca5a5;
+            display: none;
         }
 
         @media (max-width: 480px) {
@@ -244,7 +311,6 @@
             .logo {
                 width: 100px;
                 height: 100px;
-                font-size: 40px;
             }
         }
     </style>
@@ -257,7 +323,9 @@
         </div>
 
         <div class="header">
-            <div class="logo">🚛</div>
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZmZmZmZmIi8+CiAgCiAgPCEtLSBNaWNyb3Bob25lIEJhc2UgLS0+CiAgPGNpcmNsZSBjeD0iNDAiIGN5PSI4MCIgcj0iMzAiIGZpbGw9IiNkYzI2MjYiLz4KICA8IS0tIE1pY3JvcGhvbmUgR3JpbGxlIC0tPgogIDxyZWN0IHg9IjI1IiB5PSI2NSIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNkYzI2MjYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSIzMCIgeTE9IjcwIiB4Mj0iNTAiIHkyPSI3MCIgc3Ryb2tlPSIjZGMyNjI2IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8bGluZSB4MT0iMzAiIHkxPSI3NSIgeDI9IjUwIiB5Mj0iNzUiIHN0cm9rZT0iI2RjMjYyNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjMwIiB5MT0iODAiIHgyPSI1MCIgeTI9IjgwIiBzdHJva2U9IiNkYzI2MjYiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSIzMCIgeTE9Ijg1IiB4Mj0iNTAiIHkyPSI4NSIgc3Ryb2tlPSIjZGMyNjI2IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8bGluZSB4MT0iMzAiIHkxPSI5MCIgeDI9IjUwIiB5Mj0iOTAiIHN0cm9rZT0iI2RjMjYyNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgCiAgPCEtLSBNaWNyb3Bob25lIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI0NSIgeT0iMTEwIiB3aWR0aD0iNCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzM3NDE1MSIvPgogIDxyZWN0IHg9IjM2IiB5PSIxMzAiIHdpZHRoPSIyMiIgaGVpZ2h0PSI4IiBmaWxsPSIjMzc0MTUxIiByeD0iNCIvPgogIAogIDwhLS0gU291bmQgV2F2ZXMgLS0+CiAgPHBhdGggZD0iTTc1IDUwUTg1IDYwIDg1IDgwUTg1IDEwMCA3NSAxMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2RjMjYyNiIgc3Ryb2tlLXdpZHRoPSIzIiBvcGFjaXR5PSIwLjciLz4KICA8cGF0aCBkPSJNODUgNDBRODUgNjAgOTUgNjBROTUgNDAgODUgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2RjMjYyNiIgc3Ryb2tlLXdpZHRoPSIzIiBvcGFjaXR5PSIwLjUiLz4KICA8cGF0aCBkPSJNOTUgMzBRMTEwIDUwIDExMCA4MFExMTAgMTEwIDk1IDEzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZGMyNjI2IiBzdHJva2Utd2lkdGg9IjMiIG9wYWNpdHk9IjAuNSIvPgogIAogIDwhLS0gVHJ1Y2sgQ2FiIC0tPgogIDxyZWN0IHg9IjEwMCIgeT0iNzAiIHdpZHRoPSIzNSIgaGVpZ2h0PSIyNSIgZmlsbD0iIzM3NDE1MSIgcng9IjMiLz4KICA8IS0tIFRydWNrIFdpbmRzaGllbGQgLS0+CiAgPHJlY3QgeD0iMTAyIiB5PSI3MiIgd2lkdGg9IjgiIGhlaWdodD0iMjEiIGZpbGw9IiM2Mzc0OWQiLz4KICA8IS0tIFRydWNrIEdyaWxsZSAtLT4KICA8cmVjdCB4PSIxMzAiIHk9Ijc1IiB3aWR0aD0iNSIgaGVpZ2h0PSIxNSIgZmlsbD0iI2RjMjYyNiIvPgogIAogIDwhLS0gVHJ1Y2sgVHJhaWxlciAtLT4KICA8cmVjdCB4PSIxNDAiIHk9IjY1IiB3aWR0aD0iNDAiIGhlaWdodD0iMzUiIGZpbGw9IiNkYzI2MjYiIHJ4PSIzIi8+CiAgPCEtLSBUcmFpbGVyIERvb3IgLS0+CiAgPGxpbmUgeDE9IjE2NSIgeTE9IjY1IiB4Mj0iMTY1IiB5Mj0iMTAwIiBzdHJva2U9IiNiOTE5MTkiIHN0cm9rZS13aWR0aD0iMiIvPgogIAogIDwhLS0gV2hlZWxzIC0tPgogIDxjaXJjbGUgY3g9IjExNSIgY3k9IjEwNSIgcj0iOCIgZmlsbD0iIzM3NDE1MSIvPgogIDxjaXJjbGUgY3g9IjE1NSIgY3k9IjEwNSIgcj0iOCIgZmlsbD0iIzM3NDE1MSIvPgogIDxjaXJjbGUgY3g9IjE3MCIgY3k9IjEwNSIgcj0iOCIgZmlsbD0iIzM3NDE1MSIvPgogIAogIDwhLS0gVGV4dCAtLT4KICA8dGV4dCB4PSIxMDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2RjMjYyNiI+VFJVQ0sgT048L3RleHQ+CiAgPHRleHQgeD0iMTAwIiB5PSIxNjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzM3NDE1MSI+UHJvIERpZXNlbDwvdGV4dD4KPC9zdmc+" alt="Truck On Le Podcast - Pro Diesel Bellechasse" />
+            </div>
             <h1 class="title">Truck On Le Podcast</h1>
             <p class="subtitle">Par Pro Diesel Bellechasse</p>
         </div>
@@ -288,7 +356,15 @@
         </div>
 
         <div class="episodes-section">
-            <h2 class="section-title">Épisodes récents</h2>
+            <div class="refresh-section">
+                <h2 class="section-title">Épisodes récents</h2>
+                <button class="refresh-btn" id="refreshBtn">🔄 Actualiser</button>
+            </div>
+            
+            <div class="status-message" id="statusMessage">
+                <span id="statusText">Chargement en cours...</span>
+            </div>
+            
             <div id="episodesList">
                 <div class="loading">Chargement des épisodes...</div>
             </div>
@@ -298,23 +374,30 @@
     <script>
         class TruckOnPodcastApp {
             constructor() {
+                console.log('🚛 TruckOn Podcast App - Démarrage');
                 this.rssUrl = 'https://anchor.fm/s/ac4f88bc/podcast/rss';
                 this.currentEpisodeIndex = 0;
                 this.episodes = [];
                 this.isPlaying = false;
                 this.audioPlayer = document.getElementById('audioPlayer');
                 
-                this.initializeApp();
-                this.setupEventListeners();
-                this.setupPWA();
+                if (this.audioPlayer) {
+                    this.initializeApp();
+                    this.setupEventListeners();
+                    this.setupPWA();
+                } else {
+                    console.error('❌ AudioPlayer non trouvé');
+                }
             }
 
             async initializeApp() {
+                this.showStatus('🔄 Connexion au flux RSS Anchor.fm...');
                 try {
                     await this.loadPodcastData();
                     this.renderEpisodes();
                     if (this.episodes.length > 0) {
                         this.loadEpisode(0);
+                        this.hideStatus();
                     }
                 } catch (error) {
                     this.showError('Erreur lors du chargement du podcast');
@@ -322,32 +405,113 @@
                 }
             }
 
+            showStatus(message) {
+                const statusDiv = document.getElementById('statusMessage');
+                const statusText = document.getElementById('statusText');
+                if (statusDiv && statusText) {
+                    statusText.textContent = message;
+                    statusDiv.style.display = 'block';
+                }
+                console.log('📡 Status:', message);
+            }
+            
+            hideStatus() {
+                const statusDiv = document.getElementById('statusMessage');
+                if (statusDiv) {
+                    statusDiv.style.display = 'none';
+                }
+            }
+
             async loadPodcastData() {
-                // Simuler le chargement des données du podcast
-                // En production, vous utiliseriez un proxy CORS ou une API backend
-                this.episodes = [
-                    {
-                        title: "Épisode 1 - Sur la route du succès",
-                        description: "Premier épisode de Truck On Le Podcast où nous parlons de la vie sur la route et des défis du camionnage.",
-                        audioUrl: "https://example.com/episode1.mp3",
-                        duration: "45:30",
-                        pubDate: "2024-01-15"
-                    },
-                    {
-                        title: "Épisode 2 - Entretien diesel professionnel",
-                        description: "Discussion approfondie sur l'importance de la sécurité routière pour les camionneurs.",
-                        audioUrl: "https://example.com/episode2.mp3",
-                        duration: "38:15",
-                        pubDate: "2024-01-22"
-                    },
-                    {
-                        title: "Épisode 3 - Nouvelles technologies",
-                        description: "Comment les nouvelles technologies transforment le monde du transport routier.",
-                        audioUrl: "https://example.com/episode3.mp3",
-                        duration: "42:10",
-                        pubDate: "2024-01-29"
-                    }
+                // Essayer plusieurs proxies CORS
+                const proxies = [
+                    'https://api.codetabs.com/v1/proxy?quest=',
+                    'https://corsproxy.io/?',
+                    'https://api.allorigins.win/get?url='
                 ];
+                
+                for (let i = 0; i < proxies.length; i++) {
+                    try {
+                        this.showStatus(`🔍 Tentative ${i + 1}/${proxies.length}...`);
+                        
+                        let response;
+                        let xmlContent;
+                        
+                        if (proxies[i].includes('allorigins')) {
+                            response = await fetch(proxies[i] + encodeURIComponent(this.rssUrl));
+                            const data = await response.json();
+                            xmlContent = data.contents;
+                        } else {
+                            response = await fetch(proxies[i] + encodeURIComponent(this.rssUrl));
+                            xmlContent = await response.text();
+                        }
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}`);
+                        }
+                        
+                        // Parser le XML
+                        const parser = new DOMParser();
+                        const xmlDoc = parser.parseFromString(xmlContent, 'text/xml');
+                        
+                        if (xmlDoc.querySelector('parsererror')) {
+                            throw new Error('Erreur de parsing XML');
+                        }
+                        
+                        const items = xmlDoc.querySelectorAll('item');
+                        
+                        if (items.length === 0) {
+                            throw new Error('Aucun épisode trouvé');
+                        }
+                        
+                        this.episodes = Array.from(items).map(item => {
+                            const title = item.querySelector('title')?.textContent || 'Sans titre';
+                            const description = this.cleanDescription(item.querySelector('description')?.textContent || '');
+                            const audioUrl = item.querySelector('enclosure')?.getAttribute('url') || '';
+                            const pubDate = item.querySelector('pubDate')?.textContent || '';
+                            const duration = item.querySelector('itunes\\:duration, duration')?.textContent || '0:00';
+                            
+                            return {
+                                title: title.trim(),
+                                description: description.trim(),
+                                audioUrl: audioUrl,
+                                duration: duration || 'Durée inconnue',
+                                pubDate: pubDate
+                            };
+                        });
+                        
+                        this.showStatus(`✅ ${this.episodes.length} épisodes chargés!`);
+                        setTimeout(() => this.hideStatus(), 2000);
+                        return;
+                        
+                    } catch (error) {
+                        console.error(`❌ Proxy ${i + 1} échoué:`, error.message);
+                        
+                        if (i === proxies.length - 1) {
+                            this.showStatus('⚠️ Impossible de charger les épisodes');
+                            this.episodes = [
+                                {
+                                    title: "🚛 Bienvenue sur Truck On Le Podcast!",
+                                    description: "Impossible de charger les épisodes depuis Anchor.fm pour le moment. Vérifiez votre connexion et cliquez sur 'Actualiser'.",
+                                    audioUrl: "",
+                                    duration: "0:00",
+                                    pubDate: new Date().toISOString()
+                                }
+                            ];
+                        }
+                    }
+                }
+            }
+            
+            cleanDescription(description) {
+                if (!description) return '';
+                return description
+                    .replace(/<[^>]*>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/&amp;/g, '&')
+                    .replace(/&lt;/g, '<')
+                    .replace(/&gt;/g, '>')
+                    .substring(0, 200) + (description.length > 200 ? '...' : '');
             }
 
             renderEpisodes() {
@@ -361,148 +525,4 @@
                 episodesList.innerHTML = this.episodes.map((episode, index) => `
                     <div class="episode-item" onclick="app.loadEpisode(${index})">
                         <h3>${episode.title}</h3>
-                        <div class="episode-meta">${episode.duration} • ${new Date(episode.pubDate).toLocaleDateString('fr-FR')}</div>
-                        <p class="episode-desc">${episode.description}</p>
-                    </div>
-                `).join('');
-            }
-
-            loadEpisode(index) {
-                if (index < 0 || index >= this.episodes.length) return;
-                
-                this.currentEpisodeIndex = index;
-                const episode = this.episodes[index];
-                
-                document.getElementById('currentTitle').textContent = episode.title;
-                document.getElementById('currentDesc').textContent = episode.description;
-                
-                // Note: Les URLs audio sont des exemples. En production, vous auriez les vraies URLs depuis le RSS
-                this.audioPlayer.src = episode.audioUrl;
-                this.audioPlayer.load();
-                
-                this.updatePlayButton();
-            }
-
-            togglePlayPause() {
-                if (!this.episodes[this.currentEpisodeIndex]?.audioUrl) {
-                    alert('Aucun fichier audio disponible pour cet épisode');
-                    return;
-                }
-                
-                if (this.isPlaying) {
-                    this.audioPlayer.pause();
-                } else {
-                    this.audioPlayer.play().catch(error => {
-                        console.error('Erreur de lecture:', error);
-                        alert('Impossible de lire cet épisode. Vérifiez votre connexion internet.');
-                    });
-                }
-                this.isPlaying = !this.isPlaying;
-                this.updatePlayButton();
-            }
-
-            simulatePlayback() {
-                // Simulation de lecture pour la démonstration
-                let currentTime = 0;
-                const duration = 2700; // 45 minutes en secondes
-                
-                const interval = setInterval(() => {
-                    if (!this.isPlaying) {
-                        clearInterval(interval);
-                        return;
-                    }
-                    
-                    currentTime += 1;
-                    this.updateProgress(currentTime, duration);
-                    
-                    if (currentTime >= duration) {
-                        this.isPlaying = false;
-                        this.updatePlayButton();
-                        clearInterval(interval);
-                    }
-                }, 1000);
-            }
-
-            updatePlayButton() {
-                const playBtn = document.getElementById('playBtn');
-                playBtn.textContent = this.isPlaying ? '⏸' : '▶';
-            }
-
-            updateProgress(currentTime, duration) {
-                const progress = (currentTime / duration) * 100;
-                document.getElementById('progress').style.width = `${progress}%`;
-                document.getElementById('currentTime').textContent = this.formatTime(currentTime);
-                document.getElementById('duration').textContent = this.formatTime(duration);
-            }
-
-            formatTime(seconds) {
-                const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = Math.floor(seconds % 60);
-                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-            }
-
-            previousEpisode() {
-                if (this.currentEpisodeIndex > 0) {
-                    this.loadEpisode(this.currentEpisodeIndex - 1);
-                }
-            }
-
-            nextEpisode() {
-                if (this.currentEpisodeIndex < this.episodes.length - 1) {
-                    this.loadEpisode(this.currentEpisodeIndex + 1);
-                }
-            }
-
-            setupEventListeners() {
-                document.getElementById('playBtn').addEventListener('click', () => this.togglePlayPause());
-                document.getElementById('prevBtn').addEventListener('click', () => this.previousEpisode());
-                document.getElementById('nextBtn').addEventListener('click', () => this.nextEpisode());
-                
-                // Gestion de la barre de progression
-                document.getElementById('progressBar').addEventListener('click', (e) => {
-                    const rect = e.target.getBoundingClientRect();
-                    const percent = (e.clientX - rect.left) / rect.width;
-                    // En production, vous pourriez chercher à cette position dans l'audio
-                    console.log(`Chercher à ${Math.round(percent * 100)}%`);
-                });
-            }
-
-            setupPWA() {
-                // Gestion de l'installation PWA
-                let deferredPrompt;
-                
-                window.addEventListener('beforeinstallprompt', (e) => {
-                    e.preventDefault();
-                    deferredPrompt = e;
-                    document.getElementById('installBanner').style.display = 'block';
-                });
-
-                document.getElementById('installBtn').addEventListener('click', async () => {
-                    if (deferredPrompt) {
-                        deferredPrompt.prompt();
-                        const { outcome } = await deferredPrompt.userChoice;
-                        if (outcome === 'accepted') {
-                            document.getElementById('installBanner').style.display = 'none';
-                        }
-                        deferredPrompt = null;
-                    }
-                });
-
-                // Enregistrer le service worker
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('data:application/javascript;base64,Y29uc3QgQ0FDSEVfTkFNRSA9ICd0cnVjay1vbi1wb2RjYXN0LXYxJzsKY29uc3QgdXJsc1RvQ2FjaGUgPSBbCiAgJy8nLAogICcvaW5kZXguaHRtbCcKXTsKCnNlbGYuYWRkRXZlbnRMaXN0ZW5lcignaW5zdGFsbCcsIGV2ZW50ID0+IHsKICBldmVudC53YWl0VW50aWwoY2FjaGVzLm9wZW4oQ0FDSEVfTkFNRSkudGhlbihjYWNoZSA9PiBjYWNoZS5hZGRBbGwodXJsc1RvQ2FjaGUpKSk7Cn0pOwoKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGV2ZW50ID0+IHsKICBldmVudC5yZXNwb25kV2l0aCgKICAgIGNhY2hlcy5tYXRjaChldmVudC5yZXF1ZXN0KS50aGVuKHJlc3BvbnNlID0+IHsKICAgICAgcmV0dXJuIHJlc3BvbnNlIHx8IGZldGNoKGV2ZW50LnJlcXVlc3QpOwogICAgfSkKICApOwp9KTs=')
-                        .then(() => console.log('Service Worker enregistré'))
-                        .catch((error) => console.log('Service Worker échoué:', error));
-                }
-            }
-
-            showError(message) {
-                document.getElementById('episodesList').innerHTML = `<div class="error">${message}</div>`;
-            }
-        }
-
-        // Initialiser l'application
-        const app = new TruckOnPodcastApp();
-    </script>
-</body>
-</html>
+                        <div class="episode-meta">${episode.duration} • ${new Date(episode.pubDate
