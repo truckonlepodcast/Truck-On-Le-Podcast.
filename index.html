@@ -259,7 +259,7 @@
         <div class="header">
             <div class="logo">🚛</div>
             <h1 class="title">Truck On Le Podcast</h1>
-            <p class="subtitle">Par Pro Diesel Bellechasse</p>
+            <p class="subtitle">Votre podcast de camionnage préféré</p>
         </div>
 
         <div class="player-section">
@@ -334,7 +334,7 @@
                         pubDate: "2024-01-15"
                     },
                     {
-                        title: "Épisode 2 - Sécurité routière",
+                        title: "Épisode 2 - Entretien diesel professionnel",
                         description: "Discussion approfondie sur l'importance de la sécurité routière pour les camionneurs.",
                         audioUrl: "https://example.com/episode2.mp3",
                         duration: "38:15",
@@ -384,11 +384,18 @@
             }
 
             togglePlayPause() {
+                if (!this.episodes[this.currentEpisodeIndex]?.audioUrl) {
+                    alert('Aucun fichier audio disponible pour cet épisode');
+                    return;
+                }
+                
                 if (this.isPlaying) {
                     this.audioPlayer.pause();
                 } else {
-                    // En l'absence d'URLs audio réelles, on simule la lecture
-                    this.simulatePlayback();
+                    this.audioPlayer.play().catch(error => {
+                        console.error('Erreur de lecture:', error);
+                        alert('Impossible de lire cet épisode. Vérifiez votre connexion internet.');
+                    });
                 }
                 this.isPlaying = !this.isPlaying;
                 this.updatePlayButton();
